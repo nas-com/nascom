@@ -1,4 +1,4 @@
-var dappAddress = "n1iMTrBqHDVTcnYPFDtaUL8H1D7Zennv8xA";
+var dappAddress = "n21w3iFF3UapoT7XV9BjyopWoQDWViXErRx";
 var nascom_website = "http://nebulas.help";
 var isAdmin = false;
 
