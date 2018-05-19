@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/sticky-footer.css">
+
+    <title>nascom – decentralized comments platform</title>
+  </head>
+  <body>
+
+    <!-- Begin page content -->
+    <main role="main" class="container">
+      <h1 class="mt-5">nascom</h1>
+      <p>
+            <a href="index.html" class="btn btn-secondary my-2">Install</a>
+            <a href="demo.html" class="btn btn-secondary my-2">Demo</a>
+        <a href="profile.html" class="btn btn-primary my-2">My profile</a>
+          </p>
+      <p class="lead">decentralized comments platfrom on <a href="https://nebulas.io" target="_blank">Nebulas</a> blockchain</p>
+      <div>
+        <form id="profile">
+          <input type="text" name="address" placeholder="address" disabled />
+          <input type="text" name="nickname" placeholder="nickname" />
+          <input type="email" name="email" placeholder="email"/>
+          <input type="submit">
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Nebulas smart contract.</span>
+      </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="scripts/popper.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/script.js"></script>
+    <script type="text/javascript">
+      window.postMessage({
+         "target": "contentscript",
+         "data":{},
+         "method": "getAccount",
+      }, "*");
+
+      window.addEventListener('message', function(e) {
+          try{
+              var user_account = e.data.data.account;
+              var callArgs = JSON.stringify([e.data.data.account]);
+              $("#profile input[name=address]").val(user_account);
+              nebPay.simulateCall(dappAddress, "0", "get_userinfo", callArgs, {
+                  listener: function(resp) {
+                      var result = JSON.parse(resp.result);
+                      if(result){
+                        $("#profile input[name=nickname]").val(result.name);
+                        $("#profile input[name=email]").val(result.email);
+                      }
+                  }
+              }); 
+          }catch (e) {
+          }
+      });
+    </script>
+  </body>
+</html>
