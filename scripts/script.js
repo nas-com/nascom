@@ -6585,14 +6585,14 @@ $(document).ready(function() {
 		e.preventDefault();
 		var domain = $("#register-website input[name=register-domain]").val();
 		var callArgs = JSON.stringify([domain]);
-		nebPay.simulateCall(dappAddress, "10", "add_website", callArgs, {
+		nebPay.simulateCall(dappAddress, "0.01", "add_website", callArgs, {
 		    listener: function(resp) {
 		        var result = JSON.parse(resp.result);
 		        console.log(result);
 				$(".hide").show();
 				$(".points").hide();
 				$("#register-website-id").text(result.website_id);
-				nebPay.call(dappAddress, "10", "add_website", callArgs, {
+				nebPay.call(dappAddress, "0.01", "add_website", callArgs, {
 				    listener: function(resp) {
 				        var result = JSON.parse(resp.result);
 				        console.log(result);
